@@ -111,7 +111,7 @@ public class SeekArc extends View {
 	/**
 	 * is the control enabled/touchable
  	 */
-	private boolean mEnabled = true;
+	private boolean mEnabled = false;
 
 	// Internal variables
 	private int mArcRadius = 0;
@@ -254,11 +254,10 @@ public class SeekArc extends View {
 		canvas.drawArc(mArcRect, arcStart, mProgressSweep, false,
 				mProgressPaint);
 
-		if(mEnabled) {
-			// Draw the thumb nail
-			canvas.translate(mTranslateX - mThumbXPos, mTranslateY - mThumbYPos);
-			mThumb.draw(canvas);
-		}
+		// Draw the thumb nail
+		canvas.translate(mTranslateX - mThumbXPos, mTranslateY - mThumbYPos);
+		mThumb.draw(canvas);
+
 	}
 
 
