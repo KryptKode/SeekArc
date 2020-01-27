@@ -127,42 +127,16 @@ public class SeekArc extends View {
 	private float mTouchIgnoreRadius;
 	private OnSeekArcChangeListener mOnSeekArcChangeListener;
 
-	public interface OnSeekArcChangeListener {
-
-		/**
-		 * Notification that the progress level has changed. Clients can use the
-		 * fromUser parameter to distinguish user-initiated changes from those
-		 * that occurred programmatically.
-		 * 
-		 * @param seekArc
-		 *            The SeekArc whose progress has changed
-		 * @param progress
-		 *            The current progress level. This will be in the range
-		 *            0..max where max was set by
-		 *            {@link ProgressArc#setMax(int)}. (The default value for
-		 *            max is 100.)
-		 * @param fromUser
-		 *            True if the progress change was initiated by the user.
-		 */
-		void onProgressChanged(SeekArc seekArc, int progress, boolean fromUser);
-
-		/**
-		 * Notification that the user has started a touch gesture. Clients may
-		 * want to use this to disable advancing the seekbar.
-		 * 
-		 * @param seekArc
-		 *            The SeekArc in which the touch gesture began
-		 */
-		void onStartTrackingTouch(SeekArc seekArc);
-
-		/**
-		 * Notification that the user has finished a touch gesture. Clients may
-		 * want to use this to re-enable advancing the seekarc.
-		 * 
-		 * @param seekArc
-		 *            The SeekArc in which the touch gesture began
-		 */
-		void onStopTrackingTouch(SeekArc seekArc);
+	/**
+	 * Sets a listener to receive notifications of changes to the SeekArc's
+	 * progress level. Also provides notifications of when the user starts and
+	 * stops a touch gesture within the SeekArc.
+	 *
+	 * @param l The seek bar notification listener
+	 * @see SeekArc.OnSeekArcChangeListener
+	 */
+	public void setOnSeekArcChangeListener(OnSeekArcChangeListener l) {
+		mOnSeekArcChangeListener = l;
 	}
 
 	public SeekArc(Context context) {
@@ -452,18 +426,37 @@ public class SeekArc extends View {
 		invalidate();
 	}
 
-	/**
-	 * Sets a listener to receive notifications of changes to the SeekArc's
-	 * progress level. Also provides notifications of when the user starts and
-	 * stops a touch gesture within the SeekArc.
-	 * 
-	 * @param l
-	 *            The seek bar notification listener
-	 * 
-	 * @see SeekArc.OnSeekBarChangeListener
-	 */
-	public void setOnSeekArcChangeListener(OnSeekArcChangeListener l) {
-		mOnSeekArcChangeListener = l;
+	public interface OnSeekArcChangeListener {
+
+		/**
+		 * Notification that the progress level has changed. Clients can use the
+		 * fromUser parameter to distinguish user-initiated changes from those
+		 * that occurred programmatically.
+		 *
+		 * @param seekArc  The SeekArc whose progress has changed
+		 * @param progress The current progress level. This will be in the range
+		 *                 0..max where max was set by
+		 *                 {@link SeekArc#setMax(int)}. (The default value for
+		 *                 max is 100.)
+		 * @param fromUser True if the progress change was initiated by the user.
+		 */
+		void onProgressChanged(SeekArc seekArc, int progress, boolean fromUser);
+
+		/**
+		 * Notification that the user has started a touch gesture. Clients may
+		 * want to use this to disable advancing the seekbar.
+		 *
+		 * @param seekArc The SeekArc in which the touch gesture began
+		 */
+		void onStartTrackingTouch(SeekArc seekArc);
+
+		/**
+		 * Notification that the user has finished a touch gesture. Clients may
+		 * want to use this to re-enable advancing the seekarc.
+		 *
+		 * @param seekArc The SeekArc in which the touch gesture began
+		 */
+		void onStopTrackingTouch(SeekArc seekArc);
 	}
 
 	public void setProgress(int progress) {
